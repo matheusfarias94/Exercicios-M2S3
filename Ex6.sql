@@ -31,11 +31,17 @@ inner join itens_pedidos p on c.produto_id = p.produto_id
 
 
 -- Calcule a soma dos valores dos pedidos para cada cliente que tenha feito mais de um pedido.
--- SELECT c.cliente_id, ip.quantidade, c.valor,
---        (SELECT SUM(valor) FROM pedidos) AS total_valor
--- FROM pedidos c
--- INNER JOIN itens_pedidos ip ON c.pedido_id = ip.pedido_id
--- WHERE ip.quantidade > 1;
+SELECT c.cliente_id,
+       SUM(c.valor) AS total_valor
+FROM pedidos c
+WHERE c.cliente_id IN (
+    SELECT cliente_id
+    FROM pedidos
+    GROUP BY cliente_id
+    HAVING COUNT(pedido_id) > 1
+)
+GROUP BY c.cliente_id;
+
 
 
 -- Encontre o preço médio dos produtos em cada categoria.
