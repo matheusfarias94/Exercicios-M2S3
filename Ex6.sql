@@ -43,6 +43,7 @@ WHERE c.cliente_id IN (
 GROUP BY c.cliente_id;
 
 
+
 -- Encontre o preço médio dos produtos em cada categoria.
 
 
